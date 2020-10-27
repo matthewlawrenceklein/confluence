@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import { Link, Route, Switch } from "react-router-dom";
+import ConfluenceDash from './components/ConfluenceDash'
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path='/'>
+        <div className="App">
+          <h2>confluence.</h2>
+
+          <Link to='/confluence'>
+            <button>create a new confluence</button>
+          </Link>
+        </div>
+      </Route>
+
+      <Route path='/confluence'>
+        <ConfluenceDash/>
+      </Route>
+    </Switch>
   );
 }
 

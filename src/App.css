@@ -2,37 +2,69 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#master-container{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: center; 
+  align-items: center; 
 }
 
-.App-link {
-  color: #61dafb;
+.sub-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card{
+  height: 60px;
+  text-align: center;
+  width: 130px;
+  border-style: solid;
+  margin: 10px;
+  border-radius: 7px;
+  border-color: floralwhite;
+  color: floralwhite;
+  background-color: steelblue;
+  font-size: large;
+}
+
+.card-have-selected{
+  height: 60px;
+  text-align: center;
+  width: 130px;
+  border-style: solid;
+  margin: 10px;
+  border-radius: 7px;
+  border-color: floralwhite;
+  color: slategray;
+  background-color: lightgreen;
+  font-size: large;
+}
+
+.card-want-selected{
+  height: 60px;
+  text-align: center;
+  width: 130px;
+  border-style: solid;
+  margin: 10px;
+  border-radius: 7px;
+  border-color: floralwhite;
+  color: slategray;
+  background-color: lightpink;
+  font-size: large;
+}
+
+#top{
+  height: fit-content;
+  background-color: darkslateblue;
+  color: floralwhite;
+  text-align: center;
+  padding: 20px;
+  padding-bottom: 50px;
+}
+
+#bottom{
+  height: 1000px;
+  background-color: darkslategrey;
+  color: floralwhite;
+  text-align: center;
 }
