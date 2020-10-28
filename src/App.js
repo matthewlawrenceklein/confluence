@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import ConfluenceDash from './components/ConfluenceDash'
 import { Component } from 'react';
 import "firebase/firestore"
@@ -48,16 +48,13 @@ class App extends Component {
       <Switch>
         <Route exact path='/'>
           <div className="App">
-            <h2>confluence.</h2>
-  
-            
+            <h2>confluence-io</h2>
                <button onClick={this.handleNewConfluence}>create a new confluence</button>
-
           </div>
         </Route>
   
         <Route path='/confluence'>
-          <ConfluenceDash/>
+          <ConfluenceDash confluenceId={this.state.confluenceId}/>
         </Route>
 
       </Switch>

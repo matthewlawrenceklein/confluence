@@ -62,9 +62,22 @@
   padding-bottom: 50px;
 }
 
+#middle{
+  text-align: center;
+  background-color: floralwhite;
+
+}
+
 #bottom{
   height: 1000px;
   background-color: darkslategrey;
   color: floralwhite;
   text-align: center;
+}
+
+.form-item{
+  margin: 15px;
+  padding: 10px;
+  background-color: floralwhite;
+  border-radius: 7px;
 }
