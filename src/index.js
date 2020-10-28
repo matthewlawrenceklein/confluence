@@ -22,6 +22,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
+
 ReactDOM.render(
   <Router history={history}>
     <React.StrictMode>

@@ -96,20 +96,34 @@ class ConfluenceDash extends Component {
         }
     }
 
-    async generateBitly(){
-        const bitly = new BitlyClient('78fe3e713482b9ce269520fd40f97d057b093a8f', {});
-        let result;
-
+    generateBitly(){
+        const db = firebase.firestore()
+        let bitlyKey = ''
         let uri = `https://confluence-io.app/confluence/${this.props.confluenceId}`
-        try {
-        result = await bitly.shorten(uri);
-        } catch(e) {
-        throw e;
-        }
-        this.setState({
-            bitlyURL : result
-        })
 
+
+        db.collection('keys').doc('bitly').get()
+        .then((doc) => {
+            bitlyKey = doc.data().key
+            const bitly = new BitlyClient(bitlyKey, {});
+
+
+            const sendIt = async () => {
+                let result;
+                try {
+                    result = await bitly.shorten(uri);
+                } catch (e) {
+                    throw e;
+                }
+                console.log(result.url)
+                this.setState({
+                    bitlyURL : result.url 
+                })
+            }
+            sendIt()
+            
+        
+        })
     }
 
     render() {
@@ -134,7 +148,7 @@ class ConfluenceDash extends Component {
                         <button type='submit' className='form-item'>add yourself!</button>
                     </form>
                     { this.state.bitlyURL ? 
-                        <CopyToClipboard text={this.state.bitlyURL.url}>
+                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => console.log('nice')}>
                             <button className='form-item'>
                                 copy confluence link to clipboard
                             </button>
