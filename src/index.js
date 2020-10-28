@@ -3,14 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from "react-router-dom";
+import { Router } from 'react-router-dom'
+import firebase from 'firebase/app'
+import history from './components/history'
+
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: "confluence-io.firebaseapp.com",
+  databaseURL: "https://confluence-io.firebaseio.com",
+  projectId: "confluence-io",
+  storageBucket: "confluence-io.appspot.com",
+  messagingSenderId: "810410856810",
+  appId: "1:810410856810:web:e4dd2daefa8bb596a01513",
+  measurementId: "G-616PTGD5NP"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 

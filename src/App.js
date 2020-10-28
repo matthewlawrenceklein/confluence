@@ -1,9 +1,18 @@
 import './App.css';
-import { Link, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 import ConfluenceDash from './components/ConfluenceDash'
 import { Component } from 'react';
+import "firebase/firestore"
+import firebase from 'firebase/app'
+import history from './components/history'
+
+
 
 class App extends Component {
+
+  state= {
+    confluenceId : ''
+  }
 
   makeId = (length)=> {
     let result           = '';
@@ -17,12 +26,22 @@ class App extends Component {
   
   handleNewConfluence = () => {
     let confluenceId = this.makeId(10)
+    let db = firebase.firestore()
+    
+    db.collection('confluence').doc(confluenceId).set({users : []})
+      .then(() => {
+        console.log('success')
+        this.setState({
+          confluenceId : confluenceId
+        })
+        history.push(`/confluence/${this.state.confluenceId}`)
 
-    
-    
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
+
   }
-
-
 
   render(){
     return (
@@ -31,16 +50,16 @@ class App extends Component {
           <div className="App">
             <h2>confluence.</h2>
   
-            {/* <Link to='/confluence'>
-              <button>create a new confluence</button>
-            </Link> */}
-             <button onClick={this.handleNewConfluence}>create a new confluence</button>
+            
+               <button onClick={this.handleNewConfluence}>create a new confluence</button>
+
           </div>
         </Route>
   
         <Route path='/confluence'>
           <ConfluenceDash/>
         </Route>
+
       </Switch>
     );
   }
