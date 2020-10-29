@@ -4,6 +4,7 @@ import "firebase/firestore"
 import firebase from 'firebase/app'
 import { BitlyClient } from 'bitly-react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import history from './history'
 
 class ConfluenceDash extends Component {
 
@@ -13,13 +14,23 @@ class ConfluenceDash extends Component {
         haves : [],
         wants : [],
         userName : '',
-        bitlyURL : ''
+        bitlyURL : '',
+        confluenceId : ''
     }
 
     componentDidMount(){
+        this.setConfluenceId()
         this.renderHaves()
         this.renderWants()
         this.generateBitly()
+    }
+
+    setConfluenceId = () => {
+        let location = history.location.pathname.slice(-10)
+        console.log(location)
+        this.setState({confluenceId : location})
+
+        console.log(this.state)
     }
 
     renderHaves = () => {
@@ -67,13 +78,11 @@ class ConfluenceDash extends Component {
         this.setState({
             userName : e.target.value
         })   
-        console.log(this.state.userName)
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         let db = firebase.firestore()
-        let batch = db.batch()
 
         if(this.state.userName === ''){
             alert('hey, you need to input your name')
@@ -81,14 +90,16 @@ class ConfluenceDash extends Component {
         if(this.state.haves.length === 0 || this.state.wants.length === 0){
             alert('hey, you need haves AND wants!')
         } else {
-
-            let confluenceRef = db.collection('confluence').doc(this.props.confluenceId)
-            batch.set(confluenceRef, {[this.state.userName] : {
-                haves : this.state.haves, 
-                wants : this.state.wants 
-            }})
-            batch.commit().then(() => {
-                console.log('great job')
+            let location = history.location.pathname.slice(-10)
+            let confluenceRef = db.collection('confluence').doc(location)
+            confluenceRef.update({
+                [this.state.userName] : {
+                    haves : this.state.haves, 
+                    wants : this.state.wants 
+                }
+            })
+            .then(() => {
+                console.log('well done')
             })
             .catch((err) => {
                 console.log(err)
@@ -97,16 +108,15 @@ class ConfluenceDash extends Component {
     }
 
     generateBitly(){
+        let location = history.location.pathname.slice(-10)
         const db = firebase.firestore()
         let bitlyKey = ''
-        let uri = `https://confluence-io.app/confluence/${this.props.confluenceId}`
-
+        let uri = `https://confluence-io.app/confluence/${location}`
 
         db.collection('keys').doc('bitly').get()
         .then((doc) => {
             bitlyKey = doc.data().key
             const bitly = new BitlyClient(bitlyKey, {});
-
 
             const sendIt = async () => {
                 let result;
@@ -115,14 +125,11 @@ class ConfluenceDash extends Component {
                 } catch (e) {
                     throw e;
                 }
-                console.log(result.url)
                 this.setState({
                     bitlyURL : result.url 
                 })
             }
             sendIt()
-            
-        
         })
     }
 
