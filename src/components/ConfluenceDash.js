@@ -45,15 +45,9 @@ class ConfluenceDash extends Component {
         db.collection('confluence').doc(location).get()
             .then(doc => {
                 users = Object.entries(doc.data())
+                let checkedPairs = {}
 
-                // users is an array of users
-                // each indice in the users array is a sub array
-                    // index 0 of the sub array is the user name STRING
-                    // index 1 of the sub array is an object, with keys for HAVES and WANTS
-
-                // users[0][0]  => name
-                // users[0][1].haves => haves
-                // users[0][1].wants => wants
+                this.setState({matchStatements : []})
 
                 if(users.length > 1){
 
@@ -68,41 +62,33 @@ class ConfluenceDash extends Component {
                             let secondUserHaves = users[j][1].haves
                             let secondUserWants = users[j][1].wants
 
-                            firstUserWants.forEach(want => {
-                                if(secondUserHaves.includes(want)){
-                                    matchedWants.push(want)
-                                }
-                            })
+                            let wanter = users[i][0]
+                            let haver = users[j][0] 
 
-                            firstUserHaves.forEach(have => {
-                                if(secondUserWants.includes(have)){
-                                    matchedHaves.push(have)
-                                }
-                            })
+                            if(!checkedPairs[haver]){ // check to see if user at j index has been matched already as user at i index
 
-                            if(matchedHaves.length > 0 && matchedWants.length > 0){
-                                console.log(matchedHaves, matchedWants, users[i][0], users[j][0] )
-                                let wanter = users[i][0]
-                                let haver = users[j][0] 
-
-                                let combinedStatement = `${wanter} and ${haver} have matches! they should talk to each other about ${matchedWants} and ${matchedHaves}`
-
-                                this.setState({
-                                    matchStatements : [...this.state.matchStatements, combinedStatement]
+                                firstUserWants.forEach(want => {
+                                    if(secondUserHaves.includes(want)){
+                                        matchedWants.push(want)
+                                    }
                                 })
-                                // matchedHaves.forEach(have => {
-                                //     let statement = `${wanter} has ${have}`
-                                //     this.setState({
-                                //         matchStatements : [...this.state.matchStatements, statement]
-                                //     })
-                                // })
-                                // matchedWants.forEach(want => {
-                                //     let statement = `${haver} has ${want}`
-                                //     this.setState({
-                                //         matchStatements : [...this.state.matchStatements, statement]
-                                //     })
-                                // })
+    
+                                firstUserHaves.forEach(have => {
+                                    if(secondUserWants.includes(have)){
+                                        matchedHaves.push(have)
+                                    }
+                                })
+    
+                                if(matchedHaves.length > 0 && matchedWants.length > 0){
+                                    let combinedStatement = `${wanter} and ${haver} have matches! they should talk to each other about ${matchedWants} and ${matchedHaves}`
+                                    this.setState({
+                                        matchStatements : [...this.state.matchStatements, combinedStatement]
+                                    })
+                                }
+
+                                checkedPairs[wanter] = true  // add user at i index to checkedObj to avoid redundant prints 
                             }
+
                         }
                     }
                 } 
@@ -196,8 +182,8 @@ class ConfluenceDash extends Component {
     }
 
     renderResults = () => {
-        return this.state.matchStatements.map(statement => {
-        return <p>{statement}</p>
+        return this.state.matchStatements.map((statement, idx) => {
+        return <p key={idx}>{statement}</p>
         })
     }
 
