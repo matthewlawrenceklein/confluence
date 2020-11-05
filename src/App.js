@@ -28,7 +28,7 @@ class App extends Component {
     let confluenceId = this.makeId(10)
     let db = firebase.firestore()
     
-    db.collection('confluence').doc(confluenceId).set({users : []})
+    db.collection('confluence').doc(confluenceId).set({})
       .then(() => {
         console.log('success')
         this.setState({

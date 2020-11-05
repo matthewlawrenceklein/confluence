@@ -15,22 +15,14 @@ class ConfluenceDash extends Component {
         wants : [],
         userName : '',
         bitlyURL : '',
-        confluenceId : ''
+        matchStatements : []
     }
 
     componentDidMount(){
-        this.setConfluenceId()
         this.renderHaves()
         this.renderWants()
         this.generateBitly()
-    }
-
-    setConfluenceId = () => {
-        let location = history.location.pathname.slice(-10)
-        console.log(location)
-        this.setState({confluenceId : location})
-
-        console.log(this.state)
+        this.renderMatches()
     }
 
     renderHaves = () => {
@@ -43,6 +35,79 @@ class ConfluenceDash extends Component {
         return this.state.services.map((service, idx) => {
             return <ServiceCard title={service} key={idx} type='want' handleCardSelect={ this.handleCardSelect } addToList={ this.addToList }/>
         })
+    }
+
+    renderMatches = () => {
+        const db = firebase.firestore()
+        const location = history.location.pathname.slice(-10)
+        let users = []
+
+        db.collection('confluence').doc(location).get()
+            .then(doc => {
+                users = Object.entries(doc.data())
+
+                // users is an array of users
+                // each indice in the users array is a sub array
+                    // index 0 of the sub array is the user name STRING
+                    // index 1 of the sub array is an object, with keys for HAVES and WANTS
+
+                // users[0][0]  => name
+                // users[0][1].haves => haves
+                // users[0][1].wants => wants
+
+                if(users.length > 1){
+
+                    for(let i = 0; i < users.length; i++){
+                        for(let j = 1; j < users.length; j++){
+                            let firstUserHaves = users[i][1].haves
+                            let firstUserWants = users[i][1].wants
+
+                            let matchedHaves = []
+                            let matchedWants = []
+
+                            let secondUserHaves = users[j][1].haves
+                            let secondUserWants = users[j][1].wants
+
+                            firstUserWants.forEach(want => {
+                                if(secondUserHaves.includes(want)){
+                                    matchedWants.push(want)
+                                }
+                            })
+
+                            firstUserHaves.forEach(have => {
+                                if(secondUserWants.includes(have)){
+                                    matchedHaves.push(have)
+                                }
+                            })
+
+                            if(matchedHaves.length > 0 && matchedWants.length > 0){
+                                console.log(matchedHaves, matchedWants, users[i][0], users[j][0] )
+                                let wanter = users[i][0]
+                                let haver = users[j][0] 
+
+                                let combinedStatement = `${wanter} and ${haver} have matches! they should talk to each other about ${matchedWants} and ${matchedHaves}`
+
+                                this.setState({
+                                    matchStatements : [...this.state.matchStatements, combinedStatement]
+                                })
+                                // matchedHaves.forEach(have => {
+                                //     let statement = `${wanter} has ${have}`
+                                //     this.setState({
+                                //         matchStatements : [...this.state.matchStatements, statement]
+                                //     })
+                                // })
+                                // matchedWants.forEach(want => {
+                                //     let statement = `${haver} has ${want}`
+                                //     this.setState({
+                                //         matchStatements : [...this.state.matchStatements, statement]
+                                //     })
+                                // })
+                            }
+                        }
+                    }
+                } 
+
+            })
     }
 
     addToList = (provider, type) => {
@@ -68,10 +133,6 @@ class ConfluenceDash extends Component {
                     wants : [...this.state.wants, provider]
                 })
         }
-
-        console.log(this.state.haves)
-        console.log(this.state.wants)
-
     }
 
     handleNameChange = (e) => {
@@ -100,6 +161,7 @@ class ConfluenceDash extends Component {
             })
             .then(() => {
                 console.log('well done')
+                this.renderMatches()
             })
             .catch((err) => {
                 console.log(err)
@@ -133,6 +195,12 @@ class ConfluenceDash extends Component {
         })
     }
 
+    renderResults = () => {
+        return this.state.matchStatements.map(statement => {
+        return <p>{statement}</p>
+        })
+    }
+
     render() {
         return (
             <Fragment>
@@ -155,7 +223,7 @@ class ConfluenceDash extends Component {
                         <button type='submit' className='form-item'>add yourself!</button>
                     </form>
                     { this.state.bitlyURL ? 
-                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => console.log('nice')}>
+                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => alert('nice')}>
                             <button className='form-item'>
                                 copy confluence link to clipboard
                             </button>
@@ -166,6 +234,7 @@ class ConfluenceDash extends Component {
                 </div>
                 <div id='bottom'>
                     <h2> ho</h2>
+                    {this.renderResults()}
                 </div>
 
             </Fragment>
