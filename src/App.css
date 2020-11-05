@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 #master-container{
   display: flex;
@@ -10,74 +10,135 @@
 
 .sub-container{
   display: flex;
+  width: 50%;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-left: 15px;
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid grey;
+  box-shadow: 3px 3px darkgray;
+  border-radius: 4px;
 }
 
 .card{
-  height: 60px;
+  height: 55px;
   text-align: center;
-  width: 130px;
-  border-style: solid;
+  width: 140px;
+  /* border: 2px solid darkgray; */
+  box-shadow: 3px 3px darkgray;
   margin: 10px;
-  border-radius: 7px;
-  border-color: floralwhite;
-  color: floralwhite;
-  background-color: steelblue;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+  background-color: lightgrey;
   font-size: large;
 }
 
 .card-have-selected{
-  height: 60px;
+  height: 55px;
   text-align: center;
-  width: 130px;
-  border-style: solid;
+  width: 140px;
+  box-shadow: 3px 3px green;
   margin: 10px;
-  border-radius: 7px;
-  border-color: floralwhite;
-  color: slategray;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
   background-color: lightgreen;
   font-size: large;
 }
 
 .card-want-selected{
-  height: 60px;
+  height: 55px;
   text-align: center;
-  width: 130px;
-  border-style: solid;
+  width: 140px;
+  box-shadow: 3px 3px HotPink ;
   margin: 10px;
-  border-radius: 7px;
-  border-color: floralwhite;
-  color: slategray;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
   background-color: lightpink;
   font-size: large;
 }
 
 #top{
-  height: fit-content;
-  background-color: darkslateblue;
-  color: floralwhite;
   text-align: center;
-  padding: 20px;
-  padding-bottom: 50px;
+  padding: 15px;
+}
+
+#owned{
+  text-align: right;
+  display: inline;
+  position: relative;
+  right: 20%;
+}
+
+#wanted{
+  text-align: left;
+  display: inline;
+  position: relative;
+  left: 20%;
+}
+
+#render-results{
+  font-size: 16px;
 }
 
 #middle{
   text-align: center;
-  background-color: floralwhite;
-
+  border: 1px solid grey;
+  box-shadow: 3px 3px gray;
+  border-radius: 4px;
+  margin: 25px;
+  padding: 15px;
 }
 
 #bottom{
-  height: 1000px;
-  background-color: darkslategrey;
-  color: floralwhite;
   text-align: center;
+  border: 1px solid grey;
+  box-shadow: 3px 3px gray;
+  border-radius: 4px;
+  margin: 20px;
+}
+
+.form-item-button{
+  margin: 10px;
+  padding: 10px;
+  font-size: 17px;
+  border-radius: 4px;
+  box-shadow: 3px 3px gray;
+  border: 1px solid grey;
 }
 
 .form-item{
-  margin: 15px;
+  margin: 10px;
   padding: 10px;
-  background-color: floralwhite;
-  border-radius: 7px;
+  font-size: 17px;
+}
+
+p, h1, h2, h3, h4, h5, h6, button {
+  font-family: Trebuchet MS;
+}
+
+#main-title{
+  text-align: center;
+  border: 1px solid grey;
+  box-shadow: 3px 3px gray;
+  border-radius: 4px;
+  padding: 50px;
+  /* margin-left: 450px;
+  margin-right: 450px; */
+}
+
+#main-about{
+  text-align: center;
+  margin: 20px;
+  border: 1px solid grey;
+  box-shadow: 3px 3px gray;
+  border-radius: 4px;
+}
+
+#main-card{
+  margin: 20px;
+  /* padding: 20px; */
 }

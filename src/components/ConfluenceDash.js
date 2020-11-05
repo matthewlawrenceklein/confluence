@@ -182,7 +182,7 @@ class ConfluenceDash extends Component {
 
     renderResults = () => {
         return this.state.matchStatements.map((statement, idx) => {
-        return <p key={idx}>{statement}</p>
+        return <p id='render-results' key={idx}>{statement}</p>
         })
     }
 
@@ -190,12 +190,17 @@ class ConfluenceDash extends Component {
         return (
             <Fragment>
                 <div id='top'>
-                    <h3>your new confluence</h3>
+                    <h2>your new confluence</h2>
+                    <div>
+                        <br/>
+                        <h3 id='owned'>owned services</h3>
+                        <h3 id='wanted'>wanted services</h3>
+                        <br/>
+                    </div>
                     <div id='master-container'>
                         <div className='sub-container'>
                             { this.renderHaves() }
                         </div>
-
                         <div className='sub-container'>
                             { this.renderWants() }    
                         </div>    
@@ -205,11 +210,11 @@ class ConfluenceDash extends Component {
                 <div id='middle'>
                     <form onSubmit={this.handleSubmit}>
                         <input type='text' placeholder='your name' value={this.state.userName} className='form-item' onChange={this.handleNameChange}/>
-                        <button type='submit' className='form-item'>add yourself!</button>
+                        <button type='submit' className='form-item-button'>add yourself!</button>
                     </form>
                     { this.state.bitlyURL ? 
                         <CopyToClipboard text={this.state.bitlyURL} onCopy={() => alert('link has been copied')}>
-                            <button className='form-item'>
+                            <button className='form-item-button'>
                                 copy confluence link to clipboard
                             </button>
                         </CopyToClipboard>
@@ -218,7 +223,7 @@ class ConfluenceDash extends Component {
                     }
                 </div>
                 <div id='bottom'>
-                    <h2> your matches show up here</h2>
+                    <h2>matches</h2>
                     {this.renderResults()}
                 </div>
 
