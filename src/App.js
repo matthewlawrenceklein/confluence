@@ -47,8 +47,18 @@ class App extends Component {
       <Switch>
         <Route exact path='/'>
           <div className="App">
-            <h2>confluence-io</h2>
-               <button onClick={this.handleNewConfluence}>create a new confluence</button>
+            <div>
+            <div id="main-card">   
+            <div id="main-title">
+            <h1>confluence-io</h1>
+               <button onClick={this.handleNewConfluence} class="form-item-button">create a new confluence</button>
+            </div>
+            </div>
+            <div id="main-about">
+              <h2>what am i?</h2>
+              <p>words </p>
+            </div>  
+            </div>   
           </div>
         </Route>
   
