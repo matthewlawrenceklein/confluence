@@ -30,7 +30,6 @@ class App extends Component {
     
     db.collection('confluence').doc(confluenceId).set({})
       .then(() => {
-        console.log('success')
         this.setState({
           confluenceId : confluenceId
         })

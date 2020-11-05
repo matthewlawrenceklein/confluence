@@ -96,9 +96,7 @@ class ConfluenceDash extends Component {
             })
     }
 
-    addToList = (provider, type) => {
-        console.log(provider, type)
-        
+    addToList = (provider, type) => {        
         if(type === 'have'){
             this.state.haves.includes(provider) ? 
                 this.setState({
@@ -146,7 +144,8 @@ class ConfluenceDash extends Component {
                 }
             })
             .then(() => {
-                console.log('well done')
+                this.setState({userName : ''})
+                alert("you've been added! any matches will show up below")
                 this.renderMatches()
             })
             .catch((err) => {
@@ -209,7 +208,7 @@ class ConfluenceDash extends Component {
                         <button type='submit' className='form-item'>add yourself!</button>
                     </form>
                     { this.state.bitlyURL ? 
-                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => alert('nice')}>
+                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => alert('link has been copied')}>
                             <button className='form-item'>
                                 copy confluence link to clipboard
                             </button>
@@ -219,7 +218,7 @@ class ConfluenceDash extends Component {
                     }
                 </div>
                 <div id='bottom'>
-                    <h2> ho</h2>
+                    <h2> your matches show up here</h2>
                     {this.renderResults()}
                 </div>
 
