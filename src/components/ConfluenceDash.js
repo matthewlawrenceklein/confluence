@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ServiceCard from './ServiceCard'
 import "firebase/firestore"
 import firebase from 'firebase/app'
@@ -10,7 +10,9 @@ class ConfluenceDash extends Component {
 
     state = {
         services : ['Hulu', 'Netflix', 'HBO', 'Amazon', 'CBS All Access', 'CrunchyRoll', 
-                    'VRV', 'Peacock', 'ESPN+', 'Disney+', 'YoutubeTV', 'fubo', 'tubi', ],
+                    'VRV', 'Peacock', 'ESPN+', 'Disney+', 'YoutubeTV', 'fubo', 'tubi', 
+                    'Apple TV', 'Spuul',
+                    ],
         haves : [],
         wants : [],
         userName : '',
@@ -188,13 +190,13 @@ class ConfluenceDash extends Component {
 
     render() {
         return (
-            <Fragment>
+            <div className='App'>
                 <div id='top'>
-                    <h2>your new confluence</h2>
+                    <h2 id='dash-title' onClick={() => history.push('/')}>ConfluenceIO</h2>
                     <div>
                         <br/>
-                        <h3 id='owned'>owned services</h3>
-                        <h3 id='wanted'>wanted services</h3>
+                        <h3 id='owned'>owned</h3>
+                        <h3 id='wanted'>wanted</h3>
                         <br/>
                     </div>
                     <div id='master-container'>
@@ -209,7 +211,7 @@ class ConfluenceDash extends Component {
 
                 <div id='middle'>
                     <form onSubmit={this.handleSubmit}>
-                        <input type='text' placeholder='your name' value={this.state.userName} className='form-item' onChange={this.handleNameChange}/>
+                        <input id='form-input' type='text' placeholder='your name' value={this.state.userName} className='form-item' onChange={this.handleNameChange}/>
                         <button type='submit' className='form-item-button'>add yourself!</button>
                     </form>
                     { this.state.bitlyURL ? 
@@ -227,7 +229,7 @@ class ConfluenceDash extends Component {
                     {this.renderResults()}
                 </div>
 
-            </Fragment>
+            </div>
         );
     }
 }

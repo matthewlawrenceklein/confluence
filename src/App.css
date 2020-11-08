@@ -1,6 +1,10 @@
-/* .App {
-  text-align: center;
-} */
+.App {
+  /* text-align: center; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: center; 
+}
 
 #master-container{
   display: flex;
@@ -10,11 +14,12 @@
 
 .sub-container{
   display: flex;
+  justify-content: center; 
   width: 50%;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-left: 15px;
-  margin-top: 15px;
+  /* margin-left: 15px;
+  margin-right: 15px; */
   padding: 15px;
   border: 1px solid grey;
   box-shadow: 3px 3px darkgray;
@@ -33,6 +38,11 @@
   font-weight: bold;
   background-color: lightgrey;
   font-size: large;
+}
+
+.card:hover{
+  transition: .3s;
+  background-color: darkgray;
 }
 
 .card-have-selected{
@@ -64,6 +74,9 @@
 #top{
   text-align: center;
   padding: 15px;
+  width: 1200px;
+  min-width: 400px;
+  margin: 20px;
 }
 
 #owned{
@@ -89,8 +102,12 @@
   border: 1px solid grey;
   box-shadow: 3px 3px gray;
   border-radius: 4px;
-  margin: 25px;
-  padding: 15px;
+  margin: 20px;
+  /* padding: 15px; */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 1200px;
+  min-width: 400px;
 }
 
 #bottom{
@@ -99,6 +116,8 @@
   box-shadow: 3px 3px gray;
   border-radius: 4px;
   margin: 20px;
+  width: 1200px;
+  min-width: 400px;
 }
 
 .form-item-button{
@@ -108,6 +127,17 @@
   border-radius: 4px;
   box-shadow: 3px 3px gray;
   border: 1px solid grey;
+}
+
+#form-input{
+  border-radius: 4px;
+  box-shadow: 3px 3px gray;
+  border: 1px solid grey;
+}
+
+.form-item-button:hover{
+  transition: .3s;
+  background-color: darkgray;
 }
 
 .form-item{
@@ -120,25 +150,47 @@ p, h1, h2, h3, h4, h5, h6, button {
   font-family: Trebuchet MS;
 }
 
+#landing-master{
+  margin-top: 70px;
+}
+
 #main-title{
   text-align: center;
   border: 1px solid grey;
   box-shadow: 3px 3px gray;
   border-radius: 4px;
-  padding: 50px;
+  /* padding: 50px; */
   /* margin-left: 450px;
   margin-right: 450px; */
+  width: 800px;
+  min-width: 200px;
+  margin: 20px;
+  padding: 50px;
 }
 
 #main-about{
-  text-align: center;
-  margin: 20px;
+  /* text-align: center; */
   border: 1px solid grey;
   box-shadow: 3px 3px gray;
   border-radius: 4px;
+  width: 800px;
+  min-width: 200px;
+  margin: 20px;
+  padding: 50px;
+
 }
 
 #main-card{
-  margin: 20px;
+  /* margin: 20px; */
   /* padding: 20px; */
 }
+
+.about-title{
+  text-align: center;
+}
+
+#dash-title:hover{
+  color: darkgray;
+  transition: .3s;
+}
+
