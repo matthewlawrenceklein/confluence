@@ -9,6 +9,11 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "appAssociation": "AUTO", 
+    "rewrites": [ {
+      "source": "confluence-io.web.app/confluence/**",  
+      "dynamicLinks": true
+    }]
   }
 }

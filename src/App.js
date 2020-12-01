@@ -50,7 +50,7 @@ class App extends Component {
             <div id='landing-master'>
             <div id="main-card">   
             <div id="main-title">
-              <h1>confluence-io</h1>
+              <h1>ConfluenceIO</h1>
                 <button onClick={this.handleNewConfluence} class="form-item-button">create a new confluence</button>
               </div>
             </div>
