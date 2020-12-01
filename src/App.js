@@ -33,7 +33,7 @@ class App extends Component {
         this.setState({
           confluenceId : confluenceId
         })
-        history.push(`/confluence/${this.state.confluenceId}`)
+        history.push(`/${this.state.confluenceId}`)
 
       })
       .catch((error) => {
@@ -88,7 +88,7 @@ class App extends Component {
           </div>
         </Route>
   
-        <Route path='/confluence'>
+        <Route path={'/:' + this.state.confluenceId}>
           <ConfluenceDash confluenceId={this.state.confluenceId}/>
         </Route>
 

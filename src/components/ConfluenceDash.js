@@ -160,7 +160,7 @@ class ConfluenceDash extends Component {
         let location = history.location.pathname.slice(-10)
         const db = firebase.firestore()
         let bitlyKey = ''
-        let uri = `https://confluence-io.app/confluence/${location}`
+        let uri = `https://confluence-io.web.app/confluence/${location}`
 
         db.collection('keys').doc('bitly').get()
         .then((doc) => {

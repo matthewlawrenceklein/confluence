@@ -12,7 +12,7 @@
     ],
     "appAssociation": "AUTO", 
     "rewrites": [ {
-      "source": "confluence-io.web.app/confluence/**",  
+      "source": "/**",  
       "dynamicLinks": true
     }]
   }
