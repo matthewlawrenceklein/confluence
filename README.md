@@ -9,3 +9,7 @@ confluence was made to address the issue of streaming platform proliferation whi
 
 ### additional info
 confluence was built with [React](https://reactjs.org/) and [Google Firebase](https://firebase.google.com/) by [matthew lawrence klein](http://matthewlawrencekle.in), with help from [Eve Reichmann](https://evereichmann.github.io/portfolio/)
+
+### license
+code released under the GNU general public license v3 - see [LICENSE](https://github.com/matthewlawrenceklein/confluence/blob/master/LICENSE) for details
+
