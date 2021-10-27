@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import ServiceCard from './ServiceCard'
 import "firebase/firestore"
 import firebase from 'firebase/app'
-import { BitlyClient } from 'bitly-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import history from './history'
-
 class ConfluenceDash extends Component {
 
     state = {
@@ -16,15 +13,12 @@ class ConfluenceDash extends Component {
         haves: [],
         wants: [],
         userName: '',
-        bitlyURL: '',
         matchStatements: [],
-        confluenceID: this.props.match.params.id
     }
 
     componentDidMount() {
         this.renderHaves()
         this.renderWants()
-        this.generateBitly()
         this.renderMatches()
     }
 
@@ -42,7 +36,7 @@ class ConfluenceDash extends Component {
 
     renderMatches = () => {
         const db = firebase.firestore()
-        const location = this.state.confluenceID
+        const location = this.props.confluenceID
         let users = []
 
         db.collection('confluence').doc(location).get()
@@ -138,7 +132,7 @@ class ConfluenceDash extends Component {
         if (this.state.haves.length === 0 || this.state.wants.length === 0) {
             alert('hey, you need haves AND wants!')
         } else {
-            let location = history.location.pathname.slice(-10)
+            const location = this.props.confluenceID
             let confluenceRef = db.collection('confluence').doc(location)
             confluenceRef.update({
                 [this.state.userName]: {
@@ -157,32 +151,6 @@ class ConfluenceDash extends Component {
         }
     }
 
-    generateBitly() {
-        let location = this.props.match.params.id
-        const db = firebase.firestore()
-        let bitlyKey = ''
-        let uri = `http://confluence.matthewlawrencekle.in/${location}`
-
-        db.collection('keys').doc('bitly').get()
-            .then((doc) => {
-                bitlyKey = doc.data().key
-                const bitly = new BitlyClient(bitlyKey, {});
-
-                const sendIt = async () => {
-                    let result;
-                    try {
-                        result = await bitly.shorten(uri);
-                    } catch (e) {
-                        throw e;
-                    }
-                    this.setState({
-                        bitlyURL: result.url
-                    })
-                }
-                sendIt()
-            })
-    }
-
     renderResults = () => {
         return this.state.matchStatements.map((statement, idx) => {
             return <p id='render-results' key={idx}>{statement}</p>
@@ -193,7 +161,7 @@ class ConfluenceDash extends Component {
         return (
             <div className='App'>
                 <div id='top'>
-                    <h2 id='dash-title' onClick={() => history.push('/')}>ConfluenceIO</h2>
+                    <h2 id='dash-title' onClick={() => this.props.returnToHome()}>ConfluenceIO</h2>
                     <div>
                         <br />
                         <h3 id='owned'>owned</h3>
@@ -215,15 +183,11 @@ class ConfluenceDash extends Component {
                         <input id='form-input' type='text' placeholder='your name' value={this.state.userName} className='form-item' onChange={this.handleNameChange} />
                         <button type='submit' className='form-item-button'>add yourself!</button>
                     </form>
-                    {this.state.bitlyURL ?
-                        <CopyToClipboard text={this.state.bitlyURL} onCopy={() => alert('link has been copied')}>
-                            <button className='form-item-button'>
-                                copy confluence link to clipboard
-                            </button>
-                        </CopyToClipboard>
-                        :
-                        null
-                    }
+                    <CopyToClipboard text={this.props.confluenceID} onCopy={() => alert('code has been copied')}>
+                        <button className='form-item-button'>
+                            copy confluence code to clipboard
+                        </button>
+                    </CopyToClipboard>
                 </div>
                 <div id='bottom'>
                     <h2>matches</h2>
