@@ -1,5 +1,4 @@
 import './App.css';
-import { Route, Switch } from "react-router-dom";
 import ConfluenceDash from './components/ConfluenceDash'
 import { Component } from 'react';
 import "firebase/firestore"
@@ -11,7 +10,7 @@ import history from './components/history'
 class App extends Component {
 
   state = {
-    confluenceId: ''
+    userInput : ''
   }
 
   makeId = (length) => {
@@ -31,27 +30,58 @@ class App extends Component {
     db.collection('confluence').doc(confluenceId).set({})
       .then(() => {
         this.setState({
-          confluenceId: confluenceId
+          confluenceID: confluenceId
         })
-        history.push(`/${this.state.confluenceId}`)
+        history.push(`/${this.state.confluenceID}`)
 
       })
       .catch((error) => {
         console.log('error', error)
       })
+  }
 
+  handleLoadConfluence = () => {
+    const db = firebase.firestore()
+    db.collection('confluence').doc(this.state.userInput).get()
+      .then((doc) => {
+        if(doc.exists){
+          this.setState({
+            confluenceID : this.state.userInput
+          })
+        } else {
+          alert('sorry, we were unable to find your confluence :/')
+        }
+
+      })
+  }
+
+  handleUserInput = (e) => {
+    this.setState({
+      userInput : e.target.value
+    })
+  }
+
+  returnToHome = () => {
+    this.setState({
+      confluenceID : null
+    })
   }
 
   render() {
     return (
-      <Switch>
-        <Route exact path='/'>
+      !this.state.confluenceID ?
           <div className="App">
             <div id='landing-master'>
               <div id="main-card">
                 <div id="main-title">
                   <h1>ConfluenceIO</h1>
-                  <button onClick={this.handleNewConfluence} class="form-item-button">create a new confluence</button>
+                  <div id='main-title-ui'>
+                    <button onClick={this.handleNewConfluence} class="form-item-button">create a new confluence</button>
+                    <div id='main-load-confluence'>
+                      <input type='text' value={this.state.userInput} onChange={(e) => this.handleUserInput(e)} class='form-item-input' />
+                      <button onClick={() => this.handleLoadConfluence()} class="form-item-button">join an existing confluence</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div id="main-about">
@@ -86,11 +116,8 @@ class App extends Component {
               </div>
             </div>
           </div>
-        </Route>
-
-        <Route path="/:id" render={(props) => <ConfluenceDash {...props} />} />
-
-      </Switch>
+          :
+          <ConfluenceDash confluenceID={this.state.confluenceID} returnToHome={this.returnToHome}/>
     );
   }
 }

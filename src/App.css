@@ -166,6 +166,29 @@ p, h1, h2, h3, h4, h5, h6, button {
   min-width: 200px;
   margin: 20px;
   padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-title-ui{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+#main-load-confluence{
+  display: flex;
+  flex-direction: row;
+}
+
+#load-confluence-input{
+  border: 1px solid grey;
+  box-shadow: 3px 3px gray;
+  border-radius: 4px;
+  height: 100px;
+  text-align: center;
 }
 
 #main-about{
@@ -177,7 +200,8 @@ p, h1, h2, h3, h4, h5, h6, button {
   min-width: 200px;
   margin: 20px;
   padding: 50px;
-
+  margin: 20px;
+  padding: 50px;
 }
 
 #main-card{
