@@ -13,7 +13,6 @@ class ConfluenceDash extends Component {
         haves: [],
         wants: [],
         userName: '',
-        bitlyURL: '',
         matchStatements: [],
     }
 
