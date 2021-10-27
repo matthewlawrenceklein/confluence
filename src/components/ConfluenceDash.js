@@ -3,8 +3,6 @@ import ServiceCard from './ServiceCard'
 import "firebase/firestore"
 import firebase from 'firebase/app'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import history from './history'
-
 class ConfluenceDash extends Component {
 
     state = {
