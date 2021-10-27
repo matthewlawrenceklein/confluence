@@ -161,7 +161,7 @@ class ConfluenceDash extends Component {
         let location = this.props.match.params.id
         const db = firebase.firestore()
         let bitlyKey = ''
-        let uri = `http://confluence.matthewlawrencekle.in/confluence/${location}`
+        let uri = `http://confluence.matthewlawrencekle.in/${location}`
 
         db.collection('keys').doc('bitly').get()
             .then((doc) => {
